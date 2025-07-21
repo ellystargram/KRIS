@@ -4,6 +4,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.UsernameAndPassword
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.safari.SafariDriver
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Files
@@ -11,7 +12,7 @@ import java.nio.file.StandardCopyOption
 import java.time.Duration
 
 class MacroEngine(val launchEnvironment: String) {
-    var driver: WebDriver = getChromeDriver()
+    var driver: WebDriver = getWebDriver()
 
     init {
         println("SRT MACRO ENGINE STARTED")
@@ -23,14 +24,27 @@ class MacroEngine(val launchEnvironment: String) {
         println("SRT MACRO ENGINE INITIALIZED")
     }
 
+    private fun getWebDriver(): WebDriver {
+        return when (launchEnvironment) {
+            "mac os x-aarch64" -> {
+                println("MAC LAUNCH ENVIRONMENT: $launchEnvironment")
+                SafariDriver()
+            }
+
+            "windows-x64" -> {
+                println("FUCKING WINDOWS LAUNCH ENVIRONMENT: $launchEnvironment")
+                getChromeDriver()
+            }
+
+            else -> {
+                throw IllegalArgumentException("Not supported launch environment: $launchEnvironment")
+            }
+        }
+    }
+
     private fun getChromeDriver(): WebDriver {
         val chromeDriverPath = getTempFilePathFromResource(
             when (launchEnvironment) {
-                "mac os x-aarch64" -> {
-                    println("MAC LAUNCH ENVIRONMENT: $launchEnvironment")
-                    "/chromedriver/mac os x-aarch64/chromedriver"
-                }
-
                 "windows-x64" -> {
                     println("FUCKING WINDOWS LAUNCH ENVIRONMENT: $launchEnvironment")
                     "/chromedriver/windows-x64/chromedriver.exe"
@@ -49,7 +63,7 @@ class MacroEngine(val launchEnvironment: String) {
 
     private fun getTempFilePathFromResource(resourcePath: String): String {
         val inputStream: InputStream = object {}.javaClass.getResourceAsStream(resourcePath)
-            ?: throw IllegalStateException("macOS ARM64 ChromeDriver not found at $resourcePath")
+            ?: throw IllegalStateException("ChromeDriver not found at $resourcePath")
         val tempFile = File.createTempFile("chromedriver", "")
         tempFile.deleteOnExit()
         Files.copy(inputStream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING)

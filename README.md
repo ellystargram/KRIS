@@ -8,11 +8,11 @@
 KRIS 이름의 유래는 SR-KILL의 약자에서 유래하였습니다.
 
 ## KRIS의 특징
-* selenium과 chrome driver를 이용하여 SRT 예매를 자동으로 진행합니다.
+* selenium과 safari driver, chrome driver를 이용하여 SRT 예매를 자동으로 진행합니다.
 
 * Java Swing 기반의 GUI 환경을 제공하여, 사용자가 편리하게 예매를 진행할 수 있도록 합니다. //추후 Compose 기반의 GUI로 변경될 수도 있습니다.
 
-* chrome driver가 필요하기에, 실행 가능한 플랫폼을 제한합니다. 현재는 macOS-aarch64, Windows-x64 에서만 실행 가능합니다.
+* safari driver, chrome driver가 필요하기에, 실행 가능한 플랫폼을 제한합니다. 현재는 macOS는 safari driver로 다 작동 가능하며, Windows-x64 에서는 크롬 브라우저로만 실행 가능합니다.
 
 ## KRIS의 설치 방법
 > 아직까지 KRIS는 개발중인 상태이기에 정식 배포는 이루어지지 않고 있습니다.
@@ -20,6 +20,12 @@ KRIS 이름의 유래는 SR-KILL의 약자에서 유래하였습니다.
 현재 KRIS를 체험해보는 유일한 방법은 현재 git을 clone 하여 직접 빌드하는 것입니다.
 
 추후 정식 배포가 이루어지면 .jar 파일, 또는 macOS, Windows에 맞는 실행형식의 파일을 제공할 예정입니다.
+
+macOS 의 경우, Safari Driver를 처음 실행하기 위해 
+```zsh
+safaridriver --enable
+```
+를 터미널에 입력하여 Safari Driver를 활성화시켜야 합니다. 또한 Safari 브라우저의 개발자 메뉴에서 "원격 자동화"를 활성화시켜야 합니다.
 
 ## KRIS의 개발일정 예정
 > 모든 일정은 회사 일정에 의해 변동될 수 있습니다.

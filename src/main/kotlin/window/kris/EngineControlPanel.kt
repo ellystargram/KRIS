@@ -2,15 +2,13 @@ package window.kris
 
 import java.awt.Color
 import java.awt.Dimension
-import javax.swing.BoxLayout
-import javax.swing.JLabel
-import javax.swing.JPanel
-import javax.swing.JTextField
+import javax.swing.*
 import javax.swing.border.LineBorder
 
 class EngineControlPanel : JPanel() {
     val goNoButton = JLabel("Engage")
-    val engineOutput = JTextField()
+    val engineOutput = JTextArea()
+    val engineOutputScrollPane = JScrollPane(engineOutput)
 
     init {
         border = LineBorder(Color(128, 128, 128))
@@ -18,7 +16,11 @@ class EngineControlPanel : JPanel() {
         preferredSize = Dimension(0, 50)
 
         engineOutput.isEnabled = false
-        add(engineOutput)
+        engineOutput.lineWrap = true
+        engineOutput.wrapStyleWord = true
+        engineOutputScrollPane.verticalScrollBarPolicy = JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+        engineOutputScrollPane.horizontalScrollBarPolicy = JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
+        add(engineOutputScrollPane)
 
         goNoButton.border = LineBorder(Color(128, 128, 128))
         goNoButton.isOpaque = false

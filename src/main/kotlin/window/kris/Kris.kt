@@ -1,15 +1,19 @@
 package window.kris
 
+import engine.MacroEngine
 import java.awt.Dimension
+import java.awt.event.MouseAdapter
 import javax.swing.BoxLayout
 import javax.swing.JFrame
-import javax.swing.JPanel
 
 class Kris : JFrame() {
     var operatorSelectPanel: OperatorSelectPanel? = null
     var loginPanel: LoginPanel? = null
     var trainSelectPanel: TrainSelectPanel? = null
+    var browserSelectPanel: BrowserSelectPanel? = null
     var engineControlPanel: EngineControlPanel? = null
+
+    val macroEngine = MacroEngine()
 
     init {
         title = "KRIS"
@@ -22,12 +26,7 @@ class Kris : JFrame() {
         attachOperatorSelectPanel()
         attachLoginPanel()
         attachTrainSelectPanel()
-
-        val junkSpace = JPanel()
-        junkSpace.preferredSize = Dimension(800, 200)
-//        junkSpace.background = Color(12, 12, 12) //Dark mode Stamp Color
-        add(junkSpace)
-
+        attachBrowserSelectPanel()
         attachEngineControlPanel()
 
         isVisible = true
@@ -54,10 +53,27 @@ class Kris : JFrame() {
         contentPane.add(trainSelectPanel!!)
     }
 
+    private fun attachBrowserSelectPanel() {
+        if (browserSelectPanel == null) {
+            browserSelectPanel = BrowserSelectPanel()
+        }
+        contentPane.add(browserSelectPanel!!)
+    }
+
     private fun attachEngineControlPanel() {
         if (engineControlPanel == null) {
             engineControlPanel = EngineControlPanel()
         }
         contentPane.add(engineControlPanel!!)
+
+        engineControlPanel!!.goNoButton.addMouseListener(object : MouseAdapter() {
+            override fun mouseClicked(e: java.awt.event.MouseEvent?) {
+                macroEngine.goForIt = !macroEngine.goForIt
+                engineControlPanel!!.goNoButton.text = if (macroEngine.goForIt) "Stop" else "Engage"
+                if (macroEngine.goForIt) {
+                    macroEngine.macroStartUp(this@Kris)
+                }
+            }
+        })
     }
 }

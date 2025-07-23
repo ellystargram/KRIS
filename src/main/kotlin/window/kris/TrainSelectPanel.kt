@@ -49,6 +49,9 @@ class TrainSelectPanel : JPanel() {
     val tryStartIndexInput = JTextField("1")
     val tryStopIndexInput = JTextField("1")
 
+    val seatTypePanel = JPanel(GridLayout(1, 2))
+    val generalSeatButton = JCheckBox("일반석")
+    val firstSeatButton = JCheckBox("특실")
 
     init {
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
@@ -61,6 +64,7 @@ class TrainSelectPanel : JPanel() {
         addStationPanel()
         addTimePanel()
         addTryIndexPanel()
+        addSeatTypePanel()
     }
 
     private fun addStationPanel() {
@@ -84,7 +88,7 @@ class TrainSelectPanel : JPanel() {
         departureDate.text = nearDepartureDate.toString()
         departureDateTimePanel.add(departureDate)
 
-        for (i in 0..23) {
+        for (i in 0..22 step 2) {
             departureTime.addItem("$i 시")
         }
         val nearDepartureTime = (currentDateTime.hour + 1) % 24
@@ -96,9 +100,17 @@ class TrainSelectPanel : JPanel() {
 
     private fun addTryIndexPanel() {
         tryIndexPanel.add(JLabel("열차시작순번"))
-        tryIndexPanel.add(JLabel("열차종료순번"))
+        tryIndexPanel.add(JLabel("알아볼 편 수"))
         tryIndexPanel.add(tryStartIndexInput)
         tryIndexPanel.add(tryStopIndexInput)
         add(tryIndexPanel)
+    }
+
+    private fun addSeatTypePanel() {
+        generalSeatButton.isSelected = true
+        seatTypePanel.add(generalSeatButton)
+        firstSeatButton.isSelected = true
+        seatTypePanel.add(firstSeatButton)
+        add(seatTypePanel)
     }
 }

@@ -7,7 +7,7 @@ import javax.swing.JPanel
 
 class BrowserSelectPanel: JPanel() {
     val browserSelect = JComboBox<String>()
-    val browsers = listOf("Chrome", "Edge", "Safari")
+    val browsers = listOf("Chrome", "Safari", "Edge", "Firefox")
     init {
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
         for (browser in browsers) {

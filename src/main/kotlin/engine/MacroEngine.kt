@@ -4,6 +4,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.edge.EdgeDriver
+import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.safari.SafariDriver
 import org.openqa.selenium.support.ui.Select
 import window.kris.Kris
@@ -44,6 +45,7 @@ class MacroEngine {
         return when (browser) {
             "chrome" -> ChromeDriver()
             "edge" -> EdgeDriver()
+            "firefox" -> FirefoxDriver()
             else -> {
                 outputWrite("E: 지원하지 않는 브라우저입니다. Chrome, Edge, Safari 중 하나를 선택해주세요.")
                 null

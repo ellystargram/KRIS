@@ -1,6 +1,6 @@
 package window.kris
 
-import engine.MacroEngine
+import engine.SRTEngine
 import java.awt.Dimension
 import java.awt.event.MouseAdapter
 import javax.swing.BoxLayout
@@ -13,13 +13,13 @@ class Kris : JFrame() {
     var browserSelectPanel: BrowserSelectPanel? = null
     var engineControlPanel: EngineControlPanel? = null
 
-    val macroEngine = MacroEngine()
+    val srtEngine = SRTEngine()
 
     init {
         title = "KRIS"
         size = Dimension(400, 600)
         isResizable = false
-        defaultCloseOperation = DISPOSE_ON_CLOSE
+        defaultCloseOperation = EXIT_ON_CLOSE
         setLocationRelativeTo(null)
         contentPane.layout = BoxLayout(this.contentPane, BoxLayout.Y_AXIS)
 
@@ -68,11 +68,7 @@ class Kris : JFrame() {
 
         engineControlPanel!!.goNoButton.addMouseListener(object : MouseAdapter() {
             override fun mouseClicked(e: java.awt.event.MouseEvent?) {
-                macroEngine.goForIt = !macroEngine.goForIt
-                engineControlPanel!!.goNoButton.text = if (macroEngine.goForIt) "Stop" else "Engage"
-                if (macroEngine.goForIt) {
-                    macroEngine.macroStartUp(this@Kris)
-                }
+                srtEngine.toggleMacro(this@Kris)
             }
         })
     }

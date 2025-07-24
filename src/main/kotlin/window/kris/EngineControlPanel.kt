@@ -6,7 +6,7 @@ import javax.swing.*
 import javax.swing.border.LineBorder
 
 class EngineControlPanel : JPanel() {
-    val goNoButton = JLabel("Engage")
+    val goNoButton = JButton("매크로 인터렉션")
     val engineOutput = JTextArea()
     val engineOutputScrollPane = JScrollPane(engineOutput)
 

@@ -46,12 +46,13 @@ class TrainSelectPanel : JPanel() {
     val departureTime = JComboBox<String>()
 
     val tryIndexPanel = JPanel(GridLayout(2, 2))
-    val tryStartIndexInput = JTextField("1")
-    val tryStopIndexInput = JTextField("1")
+    val tryStartIndexInput = JComboBox<Int>()
+    val tryStopIndexInput = JComboBox<Int>()
 
-    val seatTypePanel = JPanel(GridLayout(1, 2))
+    val seatTypePanel = JPanel(GridLayout(1, 3))
     val generalSeatButton = JCheckBox("일반석")
     val firstSeatButton = JCheckBox("특실")
+    val reserveHoldButton = JCheckBox("예약대기")
 
     init {
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
@@ -101,8 +102,22 @@ class TrainSelectPanel : JPanel() {
     private fun addTryIndexPanel() {
         tryIndexPanel.add(JLabel("열차시작순번"))
         tryIndexPanel.add(JLabel("알아볼 편 수"))
+        for (i in 1 .. 10){
+            tryStartIndexInput.addItem(i)
+            tryStopIndexInput.addItem(i)
+        }
         tryIndexPanel.add(tryStartIndexInput)
         tryIndexPanel.add(tryStopIndexInput)
+
+        tryStartIndexInput.addActionListener {
+            val startIndexInt = tryStartIndexInput.selectedItem as Int
+            val stopIndexMax = 10 - startIndexInt + 1
+            tryStopIndexInput.removeAllItems()
+            for (i in 1 .. stopIndexMax) {
+                tryStopIndexInput.addItem(i)
+            }
+        }
+
         add(tryIndexPanel)
     }
 
@@ -111,6 +126,8 @@ class TrainSelectPanel : JPanel() {
         seatTypePanel.add(generalSeatButton)
         firstSeatButton.isSelected = true
         seatTypePanel.add(firstSeatButton)
+        reserveHoldButton.isSelected = false
+        seatTypePanel.add(reserveHoldButton)
         add(seatTypePanel)
     }
 }
